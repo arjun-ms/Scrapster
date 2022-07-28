@@ -1,4 +1,9 @@
 
+# Google Image Scraper
+
+Scrape images from google for your next ML project. Made using Selenium and Python.
+
+
 ## Run Locally
 
 ### Clone the project
@@ -34,4 +39,9 @@ Ensure you have the [appropriate version](https://chromedriver.chromium.org/down
 ```bash
   python main.py
 ```
+
+
+## Feedback
+
+If you have any feedback, please reach out to us at arjunachu123.aa@gmail.com
 
