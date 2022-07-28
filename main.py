@@ -10,8 +10,8 @@ import time
 import shutil
 
 # Constants
-PATH = "/home/ams/Documents/pyscraper/chromedriver"
-LIMIT = 10000
+PATH = "/home/ams/Documents/chromedriver"
+LIMIT = 100
 
 options = Options()
 options.binary_location = "/usr/lib/brave-bin/brave"
