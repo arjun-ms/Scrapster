@@ -1,13 +1,19 @@
 
 def scroll_to_bottom(nooftimes):
-    driver.execute_script('window.scrollTo(0,document.body.scrollHeight)')
-    time.sleep(2)
     html = driver.find_element(By.TAG_NAME,'html')
     
     for i in range(nooftimes):
         html.send_keys(Keys.END)
-        time.sleep(2)
-   
+        time.sleep(5)
+    
+    # when internet is slow uncomment the code block below
+    try:
+        # click on the show more button
+        driver.find_element(By.XPATH,'//*[@id="islmp"]/div/div/div/div[1]/div[2]/div[2]/input').click()
+        time.sleep(5)       
+    except:
+        print("No more results button")
+        pass
 
 def make_new_dir(query):
     cwd = os.getcwd()
@@ -22,10 +28,7 @@ def make_new_dir(query):
 
 def get_images_from_google():
     
-    NO_OF_TIMES = 2
-    START_INDEX = 265
-    
-    query = '"mammootty"'
+    query = '"mohanlal" -pranav'
     driver.get('https://images.google.com/')
 
     search_box = driver.find_element(By.XPATH,'//*[@id="sbtc"]/div/div[2]/input')
@@ -35,18 +38,19 @@ def get_images_from_google():
     new_dir_name = query.strip('"') 
     new_dir_path = make_new_dir(new_dir_name)
     
-    scroll_to_bottom(NO_OF_TIMES)
-    
     # for loading whole page
-    time.sleep(5)
+    time.sleep(2)
+    
+    scroll_to_bottom(NO_OF_TIMES)
+    time.sleep(10)
     
     for i in range(START_INDEX,LIMIT):
         try:
-            
             img = driver.find_element(By.XPATH,f'//*[@id="islrg"]/div[1]/div[{i}]/a[1]/div[1]/img')
             img.click()
             full_img =  driver.find_element(By.XPATH,'//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div[3]/div/a/img')
-            time.sleep(2)
+            # to load image
+            time.sleep(3)
             # Enter the location of folder in which
             # the images will be saved
             full_img.screenshot(f"{new_dir_path}/{query}-{i}.png")
@@ -57,10 +61,10 @@ def get_images_from_google():
             time.sleep(0.2)
             print(f"{query}-{i}.png downloaded")
         except:
-            print("Cant find Xpath")
             # if we can't find the XPath of an image,
             # we skip to the next image
-            continue
+            print("Can't find X-Path")
+
     
 if __name__ == "__main__":
     import os
@@ -75,11 +79,14 @@ if __name__ == "__main__":
     import shutil
     
     PATH = "/home/ams/Documents/pyscraper/chromedriver"
-    LIMIT = 10000
+    LIMIT = 2000
+    NO_OF_TIMES = 5
+    START_INDEX = 0
 
     options = Options()
     options.binary_location = "/usr/lib/brave-bin/brave"
-    driver = webdriver.Chrome(options = options,service=Service(ChromeDriverManager().install()))
+    driver = webdriver.Chrome(options = options,service=Service(PATH))
+    
     print("Starting....")
 
     # Maximize the screen
